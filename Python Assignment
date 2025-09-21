@@ -1,0 +1,107 @@
+Question 1:
+def capitalize_words(sentence):
+    words = sentence.split()
+    capitalized = []
+    for word in words:
+        capitalized.append(word.capitalize())
+    return ' '.join(capitalized)
+
+Question 2: 
+def process_list(numbers):
+    evens_doubled = [num * 2 for num in numbers if num % 2 == 0]
+    return sum(evens_doubled)
+
+Question 3:
+def extract_user_info(user):
+    username = user["profile"]["username"]
+    email = user["profile"]["email"]
+    theme = user["settings"]["theme"]
+    return(username, email, theme)
+
+Question 4:
+def get_affordable_products(products,budget):
+    affordable = []
+    for product in products:
+        if product["price"] <= budget:
+            affordable.append(product)
+    print affordable
+
+Question 5:
+def merge_lists(*lists):
+    result = []
+    for lst in lists:
+        for item in lst:
+            if item not in result:
+                result.append(item)
+    print result
+
+Question 6:
+def second_largest(lst):
+    if len(lst) < 2:
+        return None
+    first = float('-inf')
+    second = float('-inf')
+    for num in lst:
+        if num > first:
+            second = first
+            first = num
+        elif num > second and num != first:
+            second = num
+    if second == float('-inf'):
+        return None
+    print second
+
+Question 7
+def apply_operation(lst, operation):
+    if operation == "square":
+        return [x ** 2 for x in lst]
+    elif operation == "double":
+        return [x * 2 for x in lst]
+    elif operation == "negate":
+        return [-x for x in lst]
+    else:
+        return lst
+
+Question 8:
+def group_by_category(items):
+    groups = defaultdict(list)
+    for item in items:
+        category = item["category"]
+        groups[category].append(item["name"])
+    return dict(groups)
+
+Question 9:
+def get_user_city(user):
+    address = user.get("address", {})
+    return address.get("city", "Unknown")
+
+
+Question 10:
+import aiohttp
+import asyncio
+
+async def fetch_posts():
+    async with aiohttp.ClientSession() as session:
+        async with session.get('https://jsonplaceholder.typicode.com/posts') as response:
+            if response.status == 200:
+                posts = await response.json()
+                for post in posts[:5]:
+                    print(post['title'])
+            else:
+                print("Oops, something went wrong with the request.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
