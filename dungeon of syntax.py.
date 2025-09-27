@@ -1,4 +1,4 @@
-import random
+   import random
 
 # Initialize the game
 player_name = input("Enter your name, brave adventurer: ")
