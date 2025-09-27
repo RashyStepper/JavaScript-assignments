@@ -1,0 +1,97 @@
+import random
+
+# Initialize the game
+player_name = input("Enter your name, brave adventurer: ")
+health = 100
+gold = 50
+inventory = ["sword"]
+active_effects = []
+
+# Main game loop
+while health > 0:
+    # Randomly select an event
+    event = random.choice(["monster", "chest", "nothing"])
+
+    if event == "monster":
+        # Battle a monster
+        monster_name = random.choice(["Goblin", "Troll", "Skeleton"])
+        monster_health = random.randint(20, 40)
+        print(f"\nA {monster_name} appears with {monster_health} health!")
+
+        while monster_health > 0 and health > 0:
+            action = input("Do you want to [attack] or [run]? ").lower()
+            if action == "attack":
+                damage = random.randint(5, 15)
+                if "amulet" in active_effects:
+                    damage += 5
+                    active_effects.remove("amulet")
+                    print("Amulet boosts your attack!")
+                monster_health -= damage
+                print(f"You deal {damage} damage to the {monster_name}. Monster health: {monster_health}")
+
+                if monster_health > 0:
+                    monster_damage = random.randint(5, 12)
+                    if "shield" in active_effects:
+                        monster_damage //= 2
+                        active_effects.remove("shield")
+                        print("Shield reduces damage!")
+                    health -= monster_damage
+                    print(f"The {monster_name} deals {monster_damage} damage. Your health: {health}")
+                else:
+                    reward = random.randint(10, 30)
+                    gold += reward
+                    print(f"\nYou defeated the {monster_name}! You earn {reward} gold!")
+            elif action == "run":
+                print("You flee from the battle!")
+                break
+            else:
+                print("Invalid choice. Choose [attack] or [run].")
+                continue
+
+        if health <= 0:
+            print("\nGame Over! You were defeated.")
+            break
+
+    elif event == "chest":
+        # Open a chest
+        reward = random.choice(["potion", "shield", "amulet"])
+        inventory.append(reward)
+        print(f"\nYou found a chest containing a {reward}!")
+
+    else:
+        # Empty room
+        print("\nThe room is empty. Nothing happens.")
+
+    # Display current status
+    print(f"\nStatus: Health = {health}, Gold = {gold}, Inventory = {inventory}, Effects = {active_effects}")
+
+    # Player choices
+    choice = input("What do you want to do? [continue], [use item], or [quit]: ").lower()
+    if choice == "use item":
+        if not inventory:
+            print("Your inventory is empty!")
+        else:
+            print(f"Inventory: {inventory}")
+            item = input("Which item to use? ").lower()
+            if item in inventory:
+                if item == "potion":
+                    health += 20
+                    inventory.remove("potion")
+                    print("You used a potion and gained 20 health!")
+                elif item == "shield":
+                    active_effects.append("shield")
+                    inventory.remove("shield")
+                    print("You equipped a shield for the next battle!")
+                elif item == "amulet":
+                    active_effects.append("amulet")
+                    inventory.remove("amulet")
+                    print("You equipped an amulet for the next attack!")
+                else:
+                    print("Invalid item!")
+            else:
+                print("You don't have that item!")
+    elif choice == "quit":
+        print(f"\nYou leave the dungeon with {gold} gold and items: {inventory}. Farewell, {player_name}!")
+        break
+    elif choice != "continue":
+        print("Invalid choice. Choose [continue], [use item], or [quit].")dungeon
