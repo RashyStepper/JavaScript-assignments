@@ -1,4 +1,4 @@
-Question 1:
+Question number 1:
 def capitalize_words(sentence):
     words = sentence.split()
     capitalized = []
